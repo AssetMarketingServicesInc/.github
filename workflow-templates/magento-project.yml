@@ -2,10 +2,13 @@ name: Magento Project
 
 on:
   push:
-    branches: [ master ]
+    branches: 
+    - master
+    - staging
   pull_request:
     branches: 
     - master
+    - staging
     - feature/*
 
 jobs:
@@ -19,7 +22,19 @@ jobs:
   phpcs:
     uses: AssetMarketingServicesInc/.github/.github/workflows/phpcs.yml@master
     needs: build
-    
+
   phpunit:
     name: PHP Unit Tests
-    steps: 
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: artifact-${{ github.sha }}
+
+      - name: Extract Artifact
+        run: tar -xf artifact-${{ github.sha }}.tgz && rm artifact-${{ github.sha }}.tgz
+
+      - name: Execute Code Sniffer
+        run: /usr/bin/php7.4 ./vendor/bin/phpcs .
