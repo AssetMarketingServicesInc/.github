@@ -1,0 +1,10 @@
+{
+    "name": "Magento Package",
+    "description": "AmsiCorp worflow template for magento2-module or magento2-theme composer packages.",
+    "categories": [
+        "PHP"
+    ],
+    "filePatterns": [
+        "^composer.json"
+    ]
+}

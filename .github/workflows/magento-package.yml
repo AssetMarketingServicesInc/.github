@@ -1,0 +1,61 @@
+name: AmsiCorp Magento Package
+
+on:
+  workflow_call:
+    secrets:
+      REPO_MAGENTO_COM_USER:
+        required: true
+      REPO_MAGENTO_COM_PASSWORD:
+        required: true
+      SSH:
+        required: true
+
+jobs:
+  build_magento_package:
+    name: Build Magento Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH Key
+        run: mkdir -p ~/.ssh && chmod 0700 ~/.ssh && echo "${{ secrets.SSH }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+        
+      - name: Prefer PHP 7.4
+        run: sudo update-alternatives --install /usr/local/bin/php php /usr/bin/php7.4 1000
+
+      - name: Composer config
+        run: |
+          composer config --global http-basic.repo.magento.com ${{ secrets.REPO_MAGENTO_COM_USER }} ${{ secrets.REPO_MAGENTO_COM_PASSWORD }}
+          composer config --global repositories.magento composer https://repo.magento.com
+          composer config --global repositories.amsi-corp-coding-standard git git@github.com:AssetMarketingServicesInc/ams-coding-standard.git
+          composer config --global repositories.amsi-corp-magento-coding-standard git git@github.com:AssetMarketingServicesInc/magento-coding-standard.git
+
+      - uses: actions/checkout@v2
+
+      - name: Validate composer
+        run: composer validate
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress --quiet
+        
+      - name: Remove .git directory
+        run: rm -rf .git/
+
+      - name: Create Artifact
+        run: tar -czf ~/artifact-${{ github.sha }}.tgz .
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact-${{ github.sha }}
+          path: ~/artifact-${{ github.sha }}.tgz
+          retention-days: 1
