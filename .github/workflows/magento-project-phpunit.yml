@@ -1,4 +1,4 @@
-name: AmsiCorp PHPUnit
+name: M2 Project PHP Unit
 on: workflow_call
 jobs:
   phpunit:
@@ -14,4 +14,4 @@ jobs:
         run: tar -xf artifact-${{ github.sha }}.tgz && rm artifact-${{ github.sha }}.tgz
       
       - name: Execute PHPUnit
-        run: /usr/bin/php7.4 ./vendor/bin/phpunit Test
+        run: /usr/bin/php7.4 ./vendor/bin/phpunit app/code/Ams

@@ -1,0 +1,10 @@
+{
+    "name": "Magento Project",
+    "description": "AmsiCorp worflow template for magento2 composer project.",
+    "categories": [
+        "PHP"
+    ],
+    "filePatterns": [
+        "^composer.lock"
+    ]
+}
