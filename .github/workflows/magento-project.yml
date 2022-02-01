@@ -45,7 +45,7 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install Dependencies
-        run: composer install --prefer-dist -vvv
+        run: composer install --prefer-dist
         
       - name: Remove .git directory
         run: rm -rf .git/
