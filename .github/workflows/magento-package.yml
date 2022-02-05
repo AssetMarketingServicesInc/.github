@@ -3,6 +3,10 @@ name: AmsiCorp Magento Package
 on:
   workflow_call:
     secrets:
+      COMPOSER_AMASTY_COM_USER:
+        required: false
+      COMPOSER_AMASTY_COM_PASSWORD:
+        required: false
       REPO_MAGENTO_COM_USER:
         required: true
       REPO_MAGENTO_COM_PASSWORD:
@@ -28,6 +32,15 @@ jobs:
           composer config --global repositories.amsi-corp-coding-standard git git@github.com:AssetMarketingServicesInc/ams-coding-standard.git
           composer config --global repositories.amsi-corp-magento-coding-standard git git@github.com:AssetMarketingServicesInc/magento-coding-standard.git
 
+      - name: Amasty composer config
+        env:
+          AMASTY_USER: ${{ secrets.COMPOSER_AMASTY_COM_USER }}
+          AMASTY_PASSWORD: ${{ secrets.COMPOSER_AMASTY_COM_PASSWORD }}
+        if: env.AMASTY_USER != null && env.AMASTY_PASSWORD != null
+        run: |
+          composer config --global repositories.amasty composer https://composer.amasty.com/enterprise
+          composer config --global http-basic.composer.amasty.com ${{ secrets.COMPOSER_AMASTY_COM_USER }} ${{ secrets.COMPOSER_AMASTY_COM_PASSWORD }}
+          
       - uses: actions/checkout@v2
 
       - name: Validate composer
