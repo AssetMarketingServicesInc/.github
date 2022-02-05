@@ -58,7 +58,7 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install Dependencies
-        run: composer install --prefer-dist --no-progress --quiet
+        run: composer install --prefer-dist --no-progress --no-ansi --no-interaction
         
       - name: Remove .git directory
         run: rm -rf .git/
