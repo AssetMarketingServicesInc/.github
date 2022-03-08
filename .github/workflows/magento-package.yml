@@ -31,6 +31,7 @@ jobs:
           composer config --global repositories.magento composer https://repo.magento.com
           composer config --global repositories.amsi-corp-coding-standard git git@github.com:AssetMarketingServicesInc/ams-coding-standard.git
           composer config --global repositories.amsi-corp-magento-coding-standard git git@github.com:AssetMarketingServicesInc/magento-coding-standard.git
+          composer config --global repositories.amsi-corp-module-shipping git git@github.com:AssetMarketingServicesInc/magento-module-shipping.git
 
       - name: Amasty composer config
         env:
