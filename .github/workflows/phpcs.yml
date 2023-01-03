@@ -14,4 +14,4 @@ jobs:
         run: tar -xf artifact-${{ github.sha }}.tgz && rm artifact-${{ github.sha }}.tgz
       
       - name: Execute Code Sniffer
-        run: /usr/bin/php7.4 ./vendor/bin/phpcs .
+        run: /usr/bin/php ./vendor/bin/phpcs .
