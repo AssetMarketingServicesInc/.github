@@ -46,6 +46,7 @@ jobs:
         run: composer validate
 
       - name: Set output
+        id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3.2.3
