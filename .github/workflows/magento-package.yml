@@ -40,16 +40,16 @@ jobs:
           composer config --global repositories.amasty composer https://composer.amasty.com/enterprise
           composer config --global http-basic.composer.amasty.com ${{ secrets.COMPOSER_AMASTY_COM_USER }} ${{ secrets.COMPOSER_AMASTY_COM_PASSWORD }}
           
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Validate composer
         run: composer validate
 
-      - name: Get Composer Cache Directory
+      - name: Set output
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3.2.3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -66,7 +66,7 @@ jobs:
         run: tar -czf ~/artifact-${{ github.sha }}.tgz .
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: artifact-${{ github.sha }}
           path: ~/artifact-${{ github.sha }}.tgz
