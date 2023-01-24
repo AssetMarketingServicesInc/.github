@@ -32,8 +32,9 @@ jobs:
           composer config --global repositories.amsi-corp-module-nfusion-solutions git git@github.com:AssetMarketingServicesInc/magento-module-nfusion-solutions.git
           composer config --global repositories.amsi-corp-module-live-pricing git git@github.com:AssetMarketingServicesInc/magento-module-live-pricing.git
           composer config --global repositories.amsi-corp-module-payment-discounts git git@github.com:AssetMarketingServicesInc/magento-module-payment-discounts.git
+          composer config --global repositories.amsi-corp-module-module-messenger git git@github.com:AssetMarketingServicesInc/magento-module-messenger.git
+          composer config --global repositories.amsi-corp-module-module-smtp git git@github.com:AssetMarketingServicesInc/magento-module-smtp.git
           
-
       - name: Amasty composer config
         env:
           AMASTY_USER: ${{ secrets.COMPOSER_AMASTY_COM_USER }}
