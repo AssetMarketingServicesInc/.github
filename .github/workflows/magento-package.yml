@@ -26,7 +26,7 @@ jobs:
       - name: Setup SSH Key
         run: mkdir -p ~/.ssh && chmod 0700 ~/.ssh && echo "${{ secrets.SSH }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
       - name: Setup Composer GitHub token
-        run: echo '${{ secrets.COMPOSER_AUTH }}' > $HOME/.composer/auth.json  
+        run: mkdir -p $HOME/.composer && echo '${{ secrets.COMPOSER_AUTH }}' > $HOME/.composer/auth.json  
       - name: Composer config
         run: |
           composer config --global http-basic.repo.magento.com ${{ secrets.REPO_MAGENTO_COM_USER }} ${{ secrets.REPO_MAGENTO_COM_PASSWORD }}
