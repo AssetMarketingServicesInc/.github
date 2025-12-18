@@ -44,7 +44,7 @@ jobs:
           composer config --global repositories.amasty composer https://composer.amasty.com/enterprise
           composer config --global http-basic.composer.amasty.com ${{ secrets.COMPOSER_AMASTY_COM_USER }} ${{ secrets.COMPOSER_AMASTY_COM_PASSWORD }}
           
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Validate composer
         run: composer validate
@@ -70,7 +70,7 @@ jobs:
         run: tar -czf ~/artifact-${{ github.sha }}.tgz .
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4
         with:
           name: artifact-${{ github.sha }}
           path: ~/artifact-${{ github.sha }}.tgz
