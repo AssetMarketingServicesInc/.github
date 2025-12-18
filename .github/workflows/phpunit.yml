@@ -1,7 +1,7 @@
 name: AmsiCorp PHPUnit
 on: workflow_call
 jobs:
-  phpcs:
+  phpunit:
     name: "PHP Unit"
     runs-on: ubuntu-latest
     steps:
