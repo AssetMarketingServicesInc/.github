@@ -15,6 +15,8 @@ on:
         required: true
       GH_TOKEN:
         required: true
+      COMPOSER_AUTH:
+        required: false
 
 jobs:
   build_magento_package:
@@ -23,15 +25,9 @@ jobs:
     steps:
       - name: Setup SSH Key
         run: mkdir -p ~/.ssh && chmod 0700 ~/.ssh && echo "${{ secrets.SSH }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
-        
+      - name: Setup Composer GitHub token
+        run: echo '${{ secrets.COMPOSER_AUTH }}' > $HOME/.composer/auth.json  
       - name: Composer config
-        env:
-          COMPOSER_AUTH: |
-            {
-              "github-oauth": {
-                "github.com": "${{ secrets.GH_TOKEN }}"
-              }
-            }
         run: |
           composer config --global http-basic.repo.magento.com ${{ secrets.REPO_MAGENTO_COM_USER }} ${{ secrets.REPO_MAGENTO_COM_PASSWORD }}
           composer config --global repositories.magento composer https://repo.magento.com
