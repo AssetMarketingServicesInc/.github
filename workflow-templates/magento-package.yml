@@ -16,6 +16,7 @@ jobs:
       REPO_MAGENTO_COM_PASSWORD: ${{ secrets.REPO_MAGENTO_COM_PASSWORD }}
       SSH: ${{ secrets.SSH }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
   phpcs:
     uses: AssetMarketingServicesInc/.github/.github/workflows/phpcs.yml@master
